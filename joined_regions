@@ -1,4 +1,4 @@
-UPDATE le-wagon-home-exchange.WIP_Tra.joined_subs AS a
+UPDATE le-wagon-home-exchange.WIP_Tra.clean_subscriptions AS a
 SET 
   a.country = COALESCE(a.country, b.country),
   a.region = COALESCE(a.region, b.region),
