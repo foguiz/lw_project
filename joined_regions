@@ -1,23 +1,14 @@
-UPDATE le-wagon-home-exchange.WIP_Tra.subscriptions_cleaned AS a
+UPDATE le-wagon-home-exchange.WIP_Tra.joined_subs AS a
 SET 
   a.country = COALESCE(a.country, b.country),
   a.region = COALESCE(a.region, b.region),
   a.department = COALESCE(a.department, b.department),
   a.city = COALESCE(a.city, b.city)
-  /*if a.column is already filled, keep it. If it's NULL, fill it with b.column*/
 FROM (
-  SELECT *
-  FROM (
-    SELECT *,
-      ROW_NUMBER() OVER(
-        PARTITION BY host_user_id
-        ORDER BY 
-          /*Prioritize primary, then secondary (tie-break by most recent)*/
-          CASE WHEN residence_type = 'primary' THEN 1 ELSE 2 END,
-          created_at DESC
-      ) AS rn /*ROW_NUMBER() assigns a rank to each exchange per host_user_id, prioritizing first: Exchanges where residence_type = 'primary', and second: Most recent created_at timestamp*/
-    FROM le-wagon-home-exchange.WIP_Tamas.exchanges
-  )
-  WHERE rn = 1
+  SELECT *, 
+    ROW_NUMBER() OVER(PARTITION BY host_user_id ORDER BY created_at DESC) AS rn
+  FROM le-wagon-home-exchange.home_exchange.exchanges
 ) AS b
-WHERE a.user_id = b.host_user_id;
+WHERE a.user_id = b.host_user_id
+  AND b.residence_type = 'primary'
+  AND b.rn = 1;
