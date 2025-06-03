@@ -1,0 +1,12 @@
+SELECT user_id
+    ,first_subscription_date as start_subscription_date
+    ,min(subscription_date) as first_filed_subscription_date /*starts earliest 2019*/
+    ,max(subscription_date) as last_subscription_date /*ends latest 2021*/
+    ,sum(referral) as total_referrals
+    ,sum(promotion) total_promotions
+    ,count(distinct extract (year FROM subscription_date)) as total_renewals /*max. three files (2019-2021)*/
+    ,country, region, department, city
+
+FROM home_exchange.subscriptions
+/*to see single user: where user_id = 1458267*/
+group by user_id, first_subscription_date,  country, region, department, city
