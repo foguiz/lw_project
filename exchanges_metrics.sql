@@ -1,3 +1,5 @@
+-- removed avg_nights: now all is grouped by creator_id
+
 SELECT
     creator_id
     ,COUNT(exchange_id) AS total_initiated_exchanges
@@ -8,11 +10,7 @@ SELECT
     ,MAX(created_at) AS last_initiatied_exchange
     ,MIN(CASE WHEN finalized_at IS NULL THEN NULL ELSE created_at END) AS first_finalized_exchange
     ,MAX(CASE WHEN finalized_at IS NULL THEN NULL ELSE created_at END) AS last_finalized_exchange
-    ,AVG(night_count) AS avg_night_count
-    ,COUNT(night_count) AS total_night_count
+    #,AVG(night_count) AS avg_night_count
+    ,SUM(night_count) AS total_night_count
 FROM le-wagon-home-exchange.home_exchange.clean_exchanges
-GROUP BY creator_id, night_count;
-
-
-
---code to create metrics for exchanges
+GROUP BY creator_id;
