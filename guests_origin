@@ -1,3 +1,5 @@
+/*Origin from guests per exchange*/
+
 WITH hosts AS (
   SELECT
     a.exchange_id,
