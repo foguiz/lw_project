@@ -1,0 +1,11 @@
+/*Total requests per quarter*/
+
+SELECT
+  CONCAT(CAST(EXTRACT(YEAR FROM created_at) AS STRING), '-Q', CAST(EXTRACT(QUARTER FROM created_at) AS STRING)) AS quarter,
+  COUNT(*) AS total_requests
+FROM
+  `le-wagon-home-exchange.home_exchange.clean_exchanges`
+GROUP BY
+  quarter
+ORDER BY
+  quarter
