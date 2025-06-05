@@ -1,0 +1,11 @@
+/*Total sum of all the subscriptions between 2019-2021, splitted by 1-3 years of paid membership*/
+
+SELECT
+  total_paid_subscriptions,
+  COUNT(*) AS user_count
+FROM
+  `le-wagon-home-exchange.home_exchange.clean_subscriptions`
+GROUP BY
+  total_paid_subscriptions
+ORDER BY
+  total_paid_subscriptions
