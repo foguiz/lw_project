@@ -1,0 +1,18 @@
+/*Origin from guests per exchange*/
+
+WITH hosts AS (
+  SELECT
+    a.exchange_id,
+    a.creator_id,
+    a.created_at,
+    a.guest_user_id,
+    a.host_user_id,
+    a.finalized_at,
+    a.country AS host_country,
+    b.country AS guest_country
+  FROM `le-wagon-home-exchange.WIP_Tra.finalized_exchanges` AS a
+  LEFT JOIN `le-wagon-home-exchange.home_exchange.clean_subscriptions` AS b
+    ON a.guest_user_id = b.user_id
+)
+SELECT *
+FROM hosts
