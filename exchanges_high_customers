@@ -1,15 +1,16 @@
 /*all the exchanges ONLY from the high value customers*/
 
 SELECT
-  b.user_id AS high_value_customer_id,
-  a.exchange_id,
-  a.created_at,
-  a.host_user_id,
-  a.host_country,
-  b.country               
+  hv.user_id AS high_value_customer_id,
+  ex.exchange_id,
+  ex.exchange_id,
+  ex.created_at,
+  ex.host_user_id,
+  ex.host_country,
+  hv.country               
 FROM
-  `le-wagon-home-exchange.WIP_Tra.kpi_finalized_exchanges` AS a
+  `le-wagon-home-exchange.WIP_Tra.kpi_finalized_exchanges` AS ex
 INNER JOIN
-  `le-wagon-home-exchange.WIP_Tra.high_value_cus` AS b
+  `le-wagon-home-exchange.WIP_Tra.high_value_cus` AS hv
 ON
   a.guest_user_id = b.user_id
