@@ -13,4 +13,4 @@ FROM
 INNER JOIN
   `le-wagon-home-exchange.WIP_Tra.high_value_cus` AS hv
 ON
-  a.guest_user_id = b.user_id
+  ex.guest_user_id = hv.user_id
