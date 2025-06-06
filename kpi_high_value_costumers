@@ -1,0 +1,8 @@
+/*List of our high value costumers (2-3 payments)*/
+
+SELECT * FROM 
+    `le-wagon-home-exchange.home_exchange.clean_subscriptions`
+WHERE 
+    total_paid_subscriptions > 1
+ORDER BY 
+    total_paid_subscriptions DESC
