@@ -1,0 +1,14 @@
+WITH hosts AS (SELECT 
+  a.created_at,
+  a.guest_user_id,
+  a.host_user_id,
+  a.finalized_at,
+  a.country AS host_country,
+  b.country AS guest_country
+FROM `le-wagon-home-exchange.WIP_Tra.exchanges_joined_guest_id` AS a
+LEFT JOIN le-wagon-home-exchange.home_exchange.clean_subscriptions AS b
+  ON a.guest_user_id = b.user_id)
+
+SELECT * FROM hosts
+WHERE hosts.guest_country = 'FRA'
+AND hosts.host_country = 'FRA'

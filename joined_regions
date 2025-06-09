@@ -1,0 +1,14 @@
+UPDATE le-wagon-home-exchange.WIP_Tra.joined_subs AS a
+SET 
+  a.country = COALESCE(a.country, b.country),
+  a.region = COALESCE(a.region, b.region),
+  a.department = COALESCE(a.department, b.department),
+  a.city = COALESCE(a.city, b.city)
+FROM (
+  SELECT *, 
+    ROW_NUMBER() OVER(PARTITION BY host_user_id ORDER BY created_at DESC) AS rn
+  FROM le-wagon-home-exchange.home_exchange.exchanges
+) AS b
+WHERE a.user_id = b.host_user_id
+  AND b.residence_type = 'primary'
+  AND b.rn = 1;

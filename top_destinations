@@ -1,0 +1,14 @@
+/*Favorite destinations based on total requests. Ranked in Top 5 per quarter year.*/
+
+SELECT
+  CONCAT(CAST(EXTRACT(YEAR FROM created_at) AS STRING), '-Q', CAST(EXTRACT(QUARTER FROM created_at) AS STRING)) AS quarter,
+  country,
+  COUNT(*) AS country_count
+FROM
+  `le-wagon-home-exchange.home_exchange.clean_exchanges`
+GROUP BY
+  quarter, country
+QUALIFY
+  ROW_NUMBER() OVER (PARTITION BY quarter ORDER BY COUNT(*) DESC) <= 5
+ORDER BY
+  quarter, country_count DESC
