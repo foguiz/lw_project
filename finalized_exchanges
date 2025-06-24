@@ -1,4 +1,0 @@
-SELECT *
-FROM le-wagon-home-exchange.home_exchange.clean_exchanges
-WHERE finalized_at IS NOT NULL
-AND canceled_at IS NULL
